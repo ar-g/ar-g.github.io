@@ -1,20 +1,23 @@
 ---
 layout: post
 title: Efficiency and fun from using ADB Shell, Part 1
-tags: [adb, AndroidShell]
+tags: [adb, AndroidShell, install, uninstall,  copy, clean, app]
 ---
 
- In this article I want to show how to use basic adb commands to do things like `install`, `uninstall`, `copy`, `clean` app which used most often during android development and testing. This could also be helpful if we want to automate builds on CI server and be sure everything clean and legit.
+
+ In this article, I want to show how to use basic adb commands to do things like `install`, `uninstall`, `copy`, `clean` app that used most often during Android development and testing. This could also be helpful if we want to automate builds on CI server and be sure everything clean and legit.
+
+ [Android Debug Bridge](https://developer.android.com/tools/help/adb.html)(adb) is a versatile command line tool that lets you communicate with an emulator instance or connected Android-powered device. It is a client-server program which also provides a Unix [shell](https://developer.android.com/tools/help/shell.html) that you can use to run a variety of commands on an emulator/device.
 
 ## Install and Uninstall 
 
- First let’s install any apk, most likely we have more then one device connected, and need to pick one:
+ First let’s install any apk, most likely we have more than one device connected, and need to pick one:
 
 {% highlight java linenos %}
 adb devices
 //output
 List of devices attached
-106a6a4f	device
+106a6a4f    device
 //now specifying device to install simple apk
 adb -s 106a6a4f install /OurLocalPath/sample.apk
 {% endhighlight %}
@@ -36,7 +39,7 @@ adb uninstall our.package.name
 adb shell pm list packages -f
 {% endhighlight %}
 
- Almost for every command from adb exist additional flags most of them you can see
+ Almost for every command from adb exists additional flags most of them you can see with command
 {% highlight java linenos %}
 adb help
 …
@@ -52,12 +55,12 @@ adb install [-lrtsdg] <file>
 
 ## Copy files
 
- After installing apk you can find files at:
+ After installing apk you can find files located by [Package Manager](https://dzone.com/articles/depth-android-package-manager) at:
 
 - App itself in `/data/app`
-- Data directory `/data/data/<package name>` you can find here database, shared preference and other cache data. 
+- Data directory `/data/data/<package name>` where you can find databases, shared preference, and other cached data. 
 
-Most of the files might be useful during testing process, you can add data to database or change settings of application editing xml.
+Most of the files might be useful during the testing process; you can add data to database or change settings of application editing XML.
 
 For copying files from device first you need look up for them via shell then copy
 {% highlight java linenos %}
@@ -70,7 +73,7 @@ Same apply copying files into device
 adb push /OurLocalPath/ourFile.txt /data/data/our.package.name/databases/ 
 {% endhighlight %}
 
-Pretty often we want to copy data from internal storage for which we don’t have permissions by default and can get something like `remote object  `/data/data/ua.slando/databases/` does not exist` to fix it just run
+Pretty often we want to copy data from internal storage for which we do not have permissions by default and can get error `remote object  `/data/data/ua.slando/databases/` does not exist` to fix it we need run
 
 {% highlight java linenos %}
 adb kill-server
@@ -79,7 +82,7 @@ adb root
 
 ## Clean
 
-Sometimes happens that you just need to clean data of application, keeping same build and saving time, you can use PackageManager command:
+Often happens that we just need to clean data of application, keeping the same build and saving time, you can use PackageManager command:
 
 {% highlight java linenos %}
 adb shell pm clear our.package.name
@@ -87,5 +90,13 @@ adb shell pm clear our.package.name
 
 
 
-That’s it, with this set of command we can handle most of basic use-cases. In next Part I’ll tell more useful tips and tricks about adb and Android. Stay tuned and keep investigating this wonderful Android World! ;)
+That is it, with this set of command we can handle most of the basic use-cases. In next Part, I’ll tell more useful tips and tricks about adb and Android. Stay tuned and keep investigating this wonderful Android World! ;)
 
+### Author
+
+Andrii Rakhimov
+*Android Developer* @ [Uklon]
+
+
+
+[Uklon]:(http://uklon.com.ua/)
