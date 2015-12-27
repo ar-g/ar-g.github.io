@@ -4,12 +4,10 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Andrii Rakhimov 
 
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
+*Android Developer* @ [Uklon](http://uklon.com.ua/)
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[Twitter Handle](https://twitter.com/_ar_g)
