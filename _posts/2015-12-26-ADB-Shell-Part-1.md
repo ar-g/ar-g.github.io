@@ -5,7 +5,7 @@ tags: [adb, AndroidShell, install, uninstall,  copy, clean, app]
 ---
  In this article, I want to show how to use basic adb commands to do things like `install`, `uninstall`, `copy`, `clean` app that used most often during Android development and testing. This could also be helpful if we want to automate builds on CI server and be sure everything clean and legit.
 
- [Android Debug Bridge](https://developer.android.com/tools/help/adb.html)(adb) is a versatile command line tool that lets you communicate with an emulator instance or connected Android-powered device. It is a client-server program which also provides a Unix [shell](https://developer.android.com/tools/help/shell.html) that you can use to run a variety of commands on an emulator/device. ADB included into [SDK](https://developer.android.com/sdk/index.html) and you can find it at `OurSdkPath/platform-tools`
+ [Android Debug Bridge](https://developer.android.com/tools/help/adb.html)(adb) is a versatile command line tool that lets you communicate with an emulator instance or connected Android-powered device. It is a client-server program which also provides a Unix [shell](https://developer.android.com/tools/help/shell.html) that you can use to run a variety of commands on an emulator/device. ADB included into [SDK](https://developer.android.com/sdk/index.html) and you can find it at `OurSdkPath/platform-tools`. Depending of our operation system we may also need to do additional [tuning](https://developer.android.com/tools/device.html#setting-up).
 ![ADB Shell](/images/1/adb_shell.png "ADB Shell")
 ## Install and Uninstall 
 
