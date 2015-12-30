@@ -78,6 +78,8 @@ adb kill-server
 adb root
 {% endhighlight %}
 
+Keep in mind that achieve root from adb only possible for emulators or root devices. 
+
 ## Clean
 
 Often happens that we just need to clean data of application, keeping the same build and saving time, you can use PackageManager command:
