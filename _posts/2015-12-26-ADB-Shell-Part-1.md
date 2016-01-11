@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Efficiency and fun from using ADB Shell, Part 1
+title: Efficiency and fun from using ADB Shell, Part 1 - Basics
 tags: [adb, AndroidShell, install, uninstall,  copy, clean, app]
 ---
  In this article, I want to show how to use basic adb commands to do things like `install`, `uninstall`, `copy`, `clean` app that used most often during Android development and testing. This could also be helpful if we want to automate builds on CI server and be sure everything clean and legit.
@@ -78,7 +78,7 @@ adb kill-server
 adb root
 {% endhighlight %}
 
-Keep in mind that achieve root from adb only possible for emulators or root devices. 
+Keep in mind that achieve root from adb only possible for emulators or root devices. In other case we can try to use [backup command](http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html) though it may not work if declared `android:allowBackup="false"`.
 
 ## Clean
 
@@ -87,7 +87,6 @@ Often happens that we just need to clean data of application, keeping the same b
 {% highlight java linenos %}
 adb shell pm clear our.package.name
 {% endhighlight %}
-
 
 
 That is it, with this set of command we can handle most of the basic use-cases. In next Part, I’ll tell more useful tips and tricks about adb and Android. Stay tuned and keep investigating this wonderful Android World! ;)
