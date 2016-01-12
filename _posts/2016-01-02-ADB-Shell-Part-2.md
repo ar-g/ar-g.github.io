@@ -29,8 +29,28 @@ Sometimes it may help to avoid hassle of entering data every time.
  Thanks for Rene Barbosa we can see [full list of keyevents](http://stackoverflow.com/a/28969112/1823992) plus use of `swipe` and `tap` flags. We can mix commands as we wish for example to **unlock screen**:  
 {% highlight java %}     
 //26 -->  "KEYCODE_POWER" 
-adb shell "input keyevent 26; input swipe 500 500 0 0;"
+adb shell "input keyevent 26; input swipe 200 700 200 0;"
 {% endhighlight %}   
+  
+It might be come in handy to add in gradle build script like a last task for example:  
+  
+{% highlight groovy %}   
+def wakeUpViaAdb() {
+  exec {
+    //put your own shell
+    executable "zsh"
+    args "-c", 'if (($(adb devices | wc -l) < 4)); then adb \
+shell "input keyevent 26; input swipe 200 700 200 0;"; fi'
+  }
+}
+
+android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+      wakeUpViaAdb()
+    }
+  }
+    
+{% endhighlight %} 
 
 ## Output  
   We can use several information channels for output with adb `logs`, `screenshot`, `screen record`
