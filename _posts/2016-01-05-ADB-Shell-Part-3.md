@@ -152,8 +152,10 @@ Thanks for inspiration Roman Mazur we can do a lot of cool [tricks](https://stan
 There is a lot of cases when we need to test does our application handle specific intent action such as `android.intent.action.VIEW` or `android.intent.action.SEND`, this could be done via AcitivityManagerService or in adb shell with command am.   
 {% highlight java %} 
 am start -a "android.intent.action.VIEW" -d "http://our.website.com"
-am start -a "android.intent.action.SEND" --es "android.intent.extra.TEXT" "our text" -t "text/plain"
-{% endhighlight %} 
+am start -a "android.intent.action.SEND" --es "android.intent.extra.TEXT" "our text" -t "text/plain"  
+//or see geo  
+adb shell am start -a android.intent.action.VIEW -d "geo:64.873799766954136,-91.92715644836426"
+{% endhighlight %}   
   
 Some of the Intent commands we can specify. We can find more in help.  
      
@@ -193,7 +195,12 @@ adb shell am startservice -n "ar_g.blog.am/ar_g.blog.am.OurService" -e action ki
 Sending broadcast we just use our broadcast action. Even better example we can find [here](https://stanfy.com/blog/android-shell-part-2-starting-%D1%81omponents-you-need-activity-manager-client/).   
 {% highlight java %}
 adb shell am broadcast -a "our.specified.action"
-{% endhighlight %}  
+{% endhighlight %}    
+  
+Or even better **restart** Android:  
+{% highlight java %}
+adb shell am broadcast -a android.intent.action.BOOT_COMPLETED 
+{% endhighlight %}     
 
 ## Android system properties
 
@@ -211,7 +218,16 @@ adb shell setprop debug.hwui.profile visual_bars
 //to set default
 adb shell setprop debug.hwui.profile false  
 {% endhighlight %}  
+    
+## Other command line tools  
+ 
+We can find other command line tools [here](https://android.googlesource.com/platform/frameworks/base/+/android-6.0.0_r41/cmds). Some of them might be very useful   
   
+{% highlight java %}
+//disable/enable wifi  
+adb shell "svc wifi disable"
+{% endhighlight %}  
+
 ## Conclusion
 
 That is not all of the tips which could make developing and testing easier with adb, there's more power hide under `dumpsys` and other tools, but this amount of tricks will definitely help to start and keep going. This is last post of the series about ADB Shell. Do not hesitate to try new things with adb shell, mix them with power of shell and keep investigating this wonderful Android World! ;)
