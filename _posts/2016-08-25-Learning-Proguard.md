@@ -4,7 +4,8 @@ title: Learning proguard by obfuscating and converting external library project 
 tags: [proguard, aar, android]
 ---
 
-Sometimes there are some parts of your application which will never change or change not often. For such cases, you may easy convert them to aar or jar libraries and use it. The benefits are increased compilation speed of Android Project and fewer methods to hit the 64k limit.
+Sometimes there are some parts of your application which will never change or change not often. For such cases, you may easy convert them to aar or jar libraries and use it. The benefits are increased compilation speed of Android Project and fewer methods 
+to hit the 64k limit.
 
 The procedure is very straightforward. After build you usually can find aar inside <i>/library-project/build/outputs/aar/</i> . Now we can put this aar to libs folder. Then to make it work you need to reference this aar with your project and have a dependency on it.
 <pre><code>repositories {

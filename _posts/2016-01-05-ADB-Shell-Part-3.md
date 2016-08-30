@@ -146,7 +146,8 @@ Thanks for inspiration Roman Mazur we can do a lot of cool [tricks](https://stan
 ## Am
 
 There is a lot of cases when we need to test does our application handle specific intent action such as `android.intent.action.VIEW` or `android.intent.action.SEND`, this could be done via AcitivityManagerService or in adb shell with command am.   
-<pre><code>am start -a "android.intent.action.VIEW" -d "http://our.website.com"
+<pre><code>
+am start -a "android.intent.action.VIEW" -d "http://our.website.com"
 am start -a "android.intent.action.SEND" --es "android.intent.extra.TEXT" "our text" -t "text/plain"  
 //or see geo  
 adb shell am start -a android.intent.action.VIEW -d "geo:64.873799766954136,-91.92715644836426"
@@ -154,7 +155,8 @@ adb shell am start -a android.intent.action.VIEW -d "geo:64.873799766954136,-91.
   
 Some of the Intent commands we can specify. We can find more in help.  
      
-<pre><code><INTENT> specifications include these flags and arguments:
+<pre><code>
+<INTENT> specifications include these flags and arguments:
     [-a <ACTION>] [-d <DATA_URI>] [-t <MIME_TYPE>]
     [-c <CATEGORY> [-c <CATEGORY>] ...]
     [-e|--es <EXTRA_KEY> <EXTRA_STRING_VALUE> ...]
@@ -165,11 +167,16 @@ Some of the Intent commands we can specify. We can find more in help.
     [--ef <EXTRA_KEY> <EXTRA_FLOAT_VALUE> ...]
     [--eu <EXTRA_KEY> <EXTRA_URI_VALUE> ...]  
 </pre></code>   
+
 We can find more actions in class [Intent](https://developer.android.com/reference/android/content/Intent.html).
 Am gives us possibility to launch our own components Activities/Services/Broadcast with any intent we willing to specify. Keep in mind that any of our component we want to start outside the bounds of our process have to be declared as exported in AndroidManifest, otherwise, AndroidOS won't allow us start component because of security reasons. For debug/testing purpose would be best to have different [flavor](https://sites.google.com/a/android.com/tools/tech-docs/new-build-system/user-guide#TOC-Product-flavors) at our build script. To start activity for example:
-<pre><code>adb shell am start -n "our.application.id/our.package.name.OurActivity"
+
+<pre><code>
+adb shell am start -n "our.application.id/our.package.name.OurActivity"
 </pre></code>  
+
 Starting service is quite similar also we could specify additional intent extra which might be useful during testing.  
+
 <pre><code>adb shell am startservice -n "ar_g.blog.am/ar_g.blog.am.OurService" -e action kill  
 //and in service just handle intent as we wish  
 @Override public int onStartCommand(Intent intent, int flags, int startId) {
@@ -184,12 +191,17 @@ Starting service is quite similar also we could specify additional intent extra 
     return super.onStartCommand(intent, flags, startId);
   }  
 </pre></code>    
+
 Sending broadcast we just use our broadcast action. Even better example we can find [here](https://stanfy.com/blog/android-shell-part-2-starting-%D1%81omponents-you-need-activity-manager-client/).   
-<pre><code>adb shell am broadcast -a "our.specified.action"
+
+<pre><code>
+adb shell am broadcast -a "our.specified.action"
 </pre></code>    
   
 Or even better **restart** Android:  
-<pre><code>adb shell am broadcast -a android.intent.action.BOOT_COMPLETED 
+
+<pre><code>
+adb shell am broadcast -a android.intent.action.BOOT_COMPLETED 
 </pre></code>     
 
 ## Android system properties
@@ -203,6 +215,7 @@ adb shell getprop
 My favourite one for debugging UI performance, [here](https://android.googlesource.com/platform/frameworks/base/+/android-6.0.0_r41/libs/hwui/Properties.h) we can find them.
 
 For example to see does the frame rate of our app is acceptable:    
+
 <pre><code>adb shell setprop debug.hwui.profile visual_bars
 //to set default
 adb shell setprop debug.hwui.profile false  
@@ -219,8 +232,3 @@ adb shell "svc wifi disable"
 ## Conclusion
 
 That is not all of the tips which could make developing and testing easier with adb, there's more power hide under `dumpsys` and other tools, but this amount of tricks will definitely help to start and keep going. This is last post of the series about ADB Shell. Do not hesitate to try new things with adb shell, mix them with power of shell and keep investigating this wonderful Android World! ;)
-
-
-
-#### Author
-Andrii Rakhimov - *Android Developer* @ [Uklon](http://uklon.com.ua/)

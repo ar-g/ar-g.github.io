@@ -18,14 +18,14 @@ avatar: https://ar-g.github.io/images/ic.png
 footer-links:
   dribbble:
   email:
-  facebook: 100000447429343
+  facebook: AndriiRakhimov
   flickr:
   github: ar-g
   instagram:
   linkedin:
   pinterest:
   rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
-  twitter: _ar_g
+  twitter: AndriiRakhimov
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   youtube: # channel/<your_long_string> or user/<user-name>
   googleplus: # anything in your profile username that comes after plus.google.com/
@@ -55,7 +55,7 @@ baseurl: ""
 markdown: redcarpet
 #kramdown
 #redcarpet
-highlighter: rouge
+highlighter: pygments
 permalink: /:title/
 
 # The release of Jekyll Now that you're using

@@ -6,8 +6,8 @@ permalink: /about/
 
 Andrii Rakhimov 
 
-*Android Developer* @ [Uklon](http://uklon.com.ua/)
+*Android Engineer and RX evangelist* @ [Lalafo](https://lalafo.com/)
 
 ### Contact me
 
-[Twitter Handle](https://twitter.com/_ar_g)
+[Twitter Handle](https://twitter.com/AndriiRakhimov)
