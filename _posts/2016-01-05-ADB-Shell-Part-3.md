@@ -18,11 +18,10 @@ When we run our adb shell, adb daemon asks to run shell in Android and then comm
  Dumpsys is very powerful Android tool which runs on device and can dump information about system services plus it provides a possibility to communicate/set property if it was defined by service. In the end, we can get as much power and cool information as the system service provide.
   
  The basic usage could be to check does the service running at all:    
-{% highlight java %} 
-adb shell dumpsys activity services our.package.name.OurService
-{% endhighlight %}     
+<pre><code>adb shell dumpsys activity services our.package.name.OurService
+</pre></code>     
 So what does it mean?  First let's see list of available system services:   
-{% highlight java %}   
+<pre><code>   
 adb shell dumpsys -l
 Currently running services:
   DockObserver
@@ -39,10 +38,9 @@ Currently running services:
   backup
   battery
     ...
-{% endhighlight %}   
+</pre></code>   
 We will get pretty long list of services depending of our device and version of android. Then to see what each service could do  for us run:
-{% highlight java %} 
-adb shell dumpsys activity -h
+<pre><code>adb shell dumpsys activity -h
 Activity manager dump options:
   [-a] [-c] [-p package] [-h] [cmd] ...
   cmd may be one of:
@@ -71,13 +69,12 @@ Activity manager dump options:
   -a: include all available server state.
   -c: include client state.
   -p: limit output to given package.
-{% endhighlight %}  
+</pre></code>  
 We looking for information about service, `s[ervices] [COMP_SPEC ...]: service state` what we need. Finally putting it all together we getting info.
 
 One of the useful system service commands is `meminfo` which gives us info about memory management of app.
 
-{% highlight java %} 
-adb shell dumpsys meminfo com.viber.voip
+<pre><code>adb shell dumpsys meminfo com.viber.voip
 Applications Memory Usage (kB):
 Uptime: 49789130 Realtime: 64735184
 
@@ -127,40 +124,37 @@ Uptime: 49789130 Realtime: 64735184
  SQL
          MEMORY_USED:        0
   PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:       62
-{% endhighlight %}  
+</pre></code>  
 Looks like very big area to play with :) Btw if we want to know where in [Android source code](https://android.googlesource.com/platform/frameworks/base/) this command getting used, searching for output `"meminfo dump options"` and we will see that it's in ActivityManagerService:    
-{% highlight java %}
-AndroidSource/src/services/core/java/com/android/server/am/ActivityManagerService.java:
+<pre><code>AndroidSource/src/services/core/java/com/android/server/am/ActivityManagerService.java:
  14719                  packages = true;
  14720              } else if ("-h".equals(opt)) {
  14721:                 pw.println("meminfo dump options: [-a] [-d] [-c] [-s] [--oom] [process]");
  14722                  pw.println("  -a: include all available information for each process.");
  14723                  pw.println("  -d: include dalvik details.");  
-{% endhighlight %} 
+</pre></code> 
 That applicable for any system service let's say if anything possible to do with BatteryService:  
-{% highlight java %}   
+<pre><code>   
 adb shell dumpsys battery -h
 Dump current battery state, or:
   set [ac|usb|wireless|status|level|invalid] <value>
   unplug
   reset  
-{% endhighlight %}  
+</pre></code>  
 Thanks for inspiration Roman Mazur we can do a lot of cool [tricks](https://stanfy.com/blog/android-shell-part-1-mocking-battery-status/) such as test our app on different battery levels or just get fun out of it.
 
 ## Am
 
 There is a lot of cases when we need to test does our application handle specific intent action such as `android.intent.action.VIEW` or `android.intent.action.SEND`, this could be done via AcitivityManagerService or in adb shell with command am.   
-{% highlight java %} 
-am start -a "android.intent.action.VIEW" -d "http://our.website.com"
+<pre><code>am start -a "android.intent.action.VIEW" -d "http://our.website.com"
 am start -a "android.intent.action.SEND" --es "android.intent.extra.TEXT" "our text" -t "text/plain"  
 //or see geo  
 adb shell am start -a android.intent.action.VIEW -d "geo:64.873799766954136,-91.92715644836426"
-{% endhighlight %}   
+</pre></code>   
   
 Some of the Intent commands we can specify. We can find more in help.  
      
-{% highlight java %} 
-<INTENT> specifications include these flags and arguments:
+<pre><code><INTENT> specifications include these flags and arguments:
     [-a <ACTION>] [-d <DATA_URI>] [-t <MIME_TYPE>]
     [-c <CATEGORY> [-c <CATEGORY>] ...]
     [-e|--es <EXTRA_KEY> <EXTRA_STRING_VALUE> ...]
@@ -170,15 +164,13 @@ Some of the Intent commands we can specify. We can find more in help.
     [--el <EXTRA_KEY> <EXTRA_LONG_VALUE> ...]
     [--ef <EXTRA_KEY> <EXTRA_FLOAT_VALUE> ...]
     [--eu <EXTRA_KEY> <EXTRA_URI_VALUE> ...]  
-{% endhighlight %}   
+</pre></code>   
 We can find more actions in class [Intent](https://developer.android.com/reference/android/content/Intent.html).
 Am gives us possibility to launch our own components Activities/Services/Broadcast with any intent we willing to specify. Keep in mind that any of our component we want to start outside the bounds of our process have to be declared as exported in AndroidManifest, otherwise, AndroidOS won't allow us start component because of security reasons. For debug/testing purpose would be best to have different [flavor](https://sites.google.com/a/android.com/tools/tech-docs/new-build-system/user-guide#TOC-Product-flavors) at our build script. To start activity for example:
-{% highlight java %}
-adb shell am start -n "our.application.id/our.package.name.OurActivity"
-{% endhighlight %}  
+<pre><code>adb shell am start -n "our.application.id/our.package.name.OurActivity"
+</pre></code>  
 Starting service is quite similar also we could specify additional intent extra which might be useful during testing.  
-{% highlight java %}
-adb shell am startservice -n "ar_g.blog.am/ar_g.blog.am.OurService" -e action kill  
+<pre><code>adb shell am startservice -n "ar_g.blog.am/ar_g.blog.am.OurService" -e action kill  
 //and in service just handle intent as we wish  
 @Override public int onStartCommand(Intent intent, int flags, int startId) {
     if (intent != null) {
@@ -191,42 +183,38 @@ adb shell am startservice -n "ar_g.blog.am/ar_g.blog.am.OurService" -e action ki
     }
     return super.onStartCommand(intent, flags, startId);
   }  
-{% endhighlight %}    
+</pre></code>    
 Sending broadcast we just use our broadcast action. Even better example we can find [here](https://stanfy.com/blog/android-shell-part-2-starting-%D1%81omponents-you-need-activity-manager-client/).   
-{% highlight java %}
-adb shell am broadcast -a "our.specified.action"
-{% endhighlight %}    
+<pre><code>adb shell am broadcast -a "our.specified.action"
+</pre></code>    
   
 Or even better **restart** Android:  
-{% highlight java %}
-adb shell am broadcast -a android.intent.action.BOOT_COMPLETED 
-{% endhighlight %}     
+<pre><code>adb shell am broadcast -a android.intent.action.BOOT_COMPLETED 
+</pre></code>     
 
 ## Android system properties
 
 Very often during development process occur the necessity to change or see some of the system properties, to see list of properties:
  
-{% highlight java %}  
+<pre><code>  
 adb shell getprop   
-{% endhighlight %}    
+</pre></code>    
  
 My favourite one for debugging UI performance, [here](https://android.googlesource.com/platform/frameworks/base/+/android-6.0.0_r41/libs/hwui/Properties.h) we can find them.
 
 For example to see does the frame rate of our app is acceptable:    
-{% highlight java %}
-adb shell setprop debug.hwui.profile visual_bars
+<pre><code>adb shell setprop debug.hwui.profile visual_bars
 //to set default
 adb shell setprop debug.hwui.profile false  
-{% endhighlight %}  
+</pre></code>  
     
 ## Other command line tools  
  
 We can find other command line tools [here](https://android.googlesource.com/platform/frameworks/base/+/android-6.0.0_r41/cmds). Some of them might be very useful   
   
-{% highlight java %}
-//disable/enable wifi  
+<pre><code>//disable/enable wifi  
 adb shell "svc wifi disable"
-{% endhighlight %}  
+</pre></code>  
 
 ## Conclusion
 

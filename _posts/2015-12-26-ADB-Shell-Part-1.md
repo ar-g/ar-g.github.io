@@ -11,35 +11,30 @@ tags: [adb, AndroidShell, install, uninstall,  copy, clean, app]
 
  First let’s install any apk, most likely we have more than one device connected, and need to pick one:
 
-{% highlight java linenos %}
-adb devices
+<pre><code>adb devices
 //output
 List of devices attached
 106a6a4f    device
 //now specifying device to install simple apk
 adb -s 106a6a4f install /OurLocalPath/sample.apk
-{% endhighlight %}
+</pre></code>
 
  We can specify our device for any adb command for ex. to display and update sorted information about processes
-{% highlight java linenos %}
-adb -s 106a6a4f top
-{% endhighlight %}
+<pre><code>adb -s 106a6a4f top
+</pre></code>
 
  For uninstall application we just add package-name to command 
 
-{% highlight java linenos %}
-adb uninstall our.package.name
-{% endhighlight %}
+<pre><code>adb uninstall our.package.name
+</pre></code>
 
  To see list of all packages installed on device and associated file we use remote shell and package manager command
 
-{% highlight java linenos %}
-adb shell pm list packages -f
-{% endhighlight %}
+<pre><code>adb shell pm list packages -f
+</pre></code>
 
  Almost for every command from adb exists additional flags most of them you can see with command
-{% highlight java linenos %}
-adb help
+<pre><code>adb help
 …
 adb install [-lrtsdg] <file>
                                - push this package file to the device and install it
@@ -49,7 +44,7 @@ adb install [-lrtsdg] <file>
                                  (-s: install application on sdcard)
                                  (-d: allow version code downgrade)
                                  (-g: grant all runtime permissions)
-{% endhighlight %}
+</pre></code>
 
 ## Copy files
 
@@ -61,22 +56,19 @@ adb install [-lrtsdg] <file>
 Most of the files might be useful during the testing process; you can add data to database or change settings of application editing XML.
 
 For copying files from device first you need look up for them via shell then copy
-{% highlight java linenos %}
-adb shell 
+<pre><code>adb shell 
 //navigate and figure out what to copy
 adb pull /data/data/ua.slando/databases/ /OurLocalPath
-{% endhighlight %}
+</pre></code>
 Same apply copying files into device
-{% highlight java linenos %}
-adb push /OurLocalPath/ourFile.txt /data/data/our.package.name/databases/ 
-{% endhighlight %}
+<pre><code>adb push /OurLocalPath/ourFile.txt /data/data/our.package.name/databases/ 
+</pre></code>
 
 Pretty often we want to copy data from internal storage for which we do not have permissions by default and can get error `remote object  `/data/data/ua.slando/databases/` does not exist` to fix it we need run
 
-{% highlight java linenos %}
-adb kill-server
+<pre><code>adb kill-server
 adb root
-{% endhighlight %}
+</pre></code>
 
 Keep in mind that achieve root from adb only possible for emulators or root devices. In other case we can try to use [backup command](http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html) though it may not work if declared `android:allowBackup="false"`.
 
@@ -84,9 +76,8 @@ Keep in mind that achieve root from adb only possible for emulators or root devi
 
 Often happens that we just need to clean data of application, keeping the same build and saving time, you can use PackageManager command:
 
-{% highlight java linenos %}
-adb shell pm clear our.package.name
-{% endhighlight %}
+<pre><code>adb shell pm clear our.package.name
+</pre></code>
 
 
 That is it, with this set of command we can handle most of the basic use-cases. In next Part, I’ll tell more useful tips and tricks about adb and Android. Stay tuned and keep investigating this wonderful Android World! ;)
